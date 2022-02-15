@@ -1,0 +1,13 @@
+path = "パス名入力"
+files = glob.glob(path+"*.wav*")
+
+arrayFeature = [[] for i in range(10)]
+
+for file in files:
+  #fs,srがあるが同じなので省略
+  y,sr = librosa.load(file,sr=None)#ファイル読み込み
+  cutData = createData(file,y)
+
+  inputFeature(arrayFeature,cutData,sr)
+
+  sortFeature(arrayFeature)
