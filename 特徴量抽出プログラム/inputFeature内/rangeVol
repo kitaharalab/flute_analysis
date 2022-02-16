@@ -1,0 +1,2 @@
+def rangeVol(data):
+  return max(data)/min(data)
