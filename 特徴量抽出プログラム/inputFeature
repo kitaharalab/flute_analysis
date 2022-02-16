@@ -1,0 +1,11 @@
+def inputFeature(array,data,sr):
+
+  array[0].append(rangeVol(data))
+  array[1].append(divAvgVol(data))
+
+  fundData = createFundData(data)
+  array[2].append(rangeFund(fundData))
+  array[3].append(divAvgFund(fundData))
+
+  #for i in range(0,4): array[i+4].append(overtoneFeature(data,sr,0)[i])
+  #倍音関連の関数追加
