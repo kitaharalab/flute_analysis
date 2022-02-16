@@ -1,0 +1,10 @@
+def sortFeature(array):
+  blowType = [[] for i in range(5)]
+  for i in range(0,len(array)):
+    if re.search("n.*\.wav",array[0]): blowType[0].append(array[i])
+    elif re.search("b.*\.wav",array[0]): blowType[1].append(array[i])
+    elif re.search("s.*\.wav",array[0]): blowType[2].append(array[i])
+    elif re.search("u.*\.wav",array[0]): blowType[3].append(array[i])
+    else: blowType[4].append(array[i])
+
+  return blowType
