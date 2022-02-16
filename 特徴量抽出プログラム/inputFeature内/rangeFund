@@ -1,0 +1,15 @@
+def rangeFund(data):
+  q75, q25 = np.percentile(data, [75 ,25])
+  if q75 != q75 or q25 != q25 or q75 < 0 or q25 < 0:
+    mx = max(data)
+    mn = min(data)
+    data = sorted(data)
+    if mn < 0 or mn != mn: i = 0
+      while mn < 0 or mn != mn:
+          i += 1
+          mn = data[i]     
+    if (q75 != q75 and q25 != q25) or q25 < 0: iqr = mx-mn
+    elif q75 != q75: iqr = mx-q25
+    else: iqr = q75-mn
+  else: iqr = q75 - q25
+  return iqr
