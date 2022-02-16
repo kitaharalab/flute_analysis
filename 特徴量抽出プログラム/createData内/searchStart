@@ -1,0 +1,15 @@
+def searchStart(file,rangeJudge,baseCut):
+  dataStart = 0
+  tmpStart = dataStart+rangeJudge
+ 
+  while rms[0][dataStart] < cut or rms[0][tmpStart] < baseCut:
+    if rms[0][tmpStart] >= baseCut:
+      for i in range(dataStart+1,tmpStart+rangeJudge):#(sは見なくて良い)
+        if rms[0][i] < baseCut:
+          dataStart = i
+          tmpStart = dataStart
+          break#(for文から出る)
+    dataStart += 1
+    tmpStart = dataStart+rangeJudge
+
+  return dataStart
