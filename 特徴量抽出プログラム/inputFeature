@@ -1,5 +1,6 @@
 def inputFeature(array,data,sr):
 
+  rms = librosa.feature.rms(y=data,hop_length = 512*4)#hop_length512に変更
   array[0].append(rangeVol(data))
   array[1].append(divAvgVol(data))
 
