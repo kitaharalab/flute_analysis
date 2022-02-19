@@ -1,3 +1,7 @@
+import glob
+from scipy.io.wavfile import write
+import librosa.display
+
 label = "パスを記入"
 files = glob.glob(label+"*.wav*")#wavファイルを取り出す
 
