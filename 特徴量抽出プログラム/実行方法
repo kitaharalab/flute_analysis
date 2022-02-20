@@ -1,0 +1,9 @@
+1.事前準備
+プログラムを実行するためにpretty_midi、numpy、librosaの3つをインストールしてください。コマンドラインに以下のように入力すればできると思います。
+pip install pretty_midi
+pip install numpy
+pip install librosa
+
+2.実行方法
+実行はpython3で行います。「特徴量抽出プログラム」の中にある全てのコードをまとめて実行すると音の特徴量の配列を得ることができます。
+配列の中の順番は
