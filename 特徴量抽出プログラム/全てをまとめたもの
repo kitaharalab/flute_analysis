@@ -201,7 +201,5 @@ for file in files:
 
   inputFeature(arrayFeature,cutData,sr)
 
-  #sortFeature(arrayFeature)
-
 for i in arrayFeature:
   print(i)
