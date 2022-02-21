@@ -200,6 +200,3 @@ for file in files:
   cutData = createData(file,y)
 
   inputFeature(arrayFeature,cutData,sr)
-
-for i in arrayFeature:
-  print(i)
