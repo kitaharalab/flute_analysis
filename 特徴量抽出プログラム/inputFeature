@@ -1,12 +1,12 @@
 def inputFeature(array,data,sr):
 
-  rms = librosa.feature.rms(y=data,hop_length = 512*4)#hop_length512に変更
-  array[0].append(rangeVol(data))
-  array[1].append(divAvgVol(data))
+  array[0].append(rangeVol(data[0]))
+  array[1].append(divAvgVol(data[0]))
 
-  fundData = createFundData(data)
+  fundData = createFundData(data[0],sr)
   array[2].append(rangeFund(fundData))
   array[3].append(divAvgFund(fundData))
 
-  #for i in range(0,4): array[i+4].append(overtoneFeature(data,sr,0)[i])
-  #倍音関連の関数追加
+  for i in range(0,3): array[i+4].append(overtoneFeature(data,sr,0)[i])
+
+  for i in range(0,3): array[i+7].append(overtoneFeature(data,sr,1)[i])
