@@ -1,7 +1,4 @@
 1.事前準備
-今回の研究で使用した音源は以下のURLにあります。
-https://drive.google.com/drive/u/0/folders/1qjcAuDOCphtKS6n-aLmu3OaTgPY2cTpy
-
 プログラムを実行するためにpretty_midi、numpy、librosa、pyworldの4つをインストールしてください。コマンドラインに以下のように入力すればできると思います。
 pip install pretty_midi
 pip install numpy
