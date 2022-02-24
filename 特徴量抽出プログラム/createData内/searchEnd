@@ -1,21 +1,21 @@
-def searchEnd(file,rangeJudge,baseCut):
-  dataEnd = len(rms[0])-1
+def searchEnd(rms,rangeJudge,baseCut):
+  dataEnd = len(rms)-1
   tmpEnd = dataEnd-rangeJudge
  
-  while rms[0][dataEnd] < cut or rms[0][tmpEnd] < baseCut:
-    if rms[0][tmpEnd] >= baseCut:
-      if tmpEnd+rangeJudge < len(rms[0])-1:
-        for i in range(tmpEnd-rangeJudge,dataEnd-1):#(eは見なくて良い)
-          if rms[0][i] < baseCut:
+  while rms[dataEnd] < baseCut or rms[tmpEnd] < baseCut:
+    if rms[tmpEnd] >= baseCut:
+      if tmpEnd+rangeJudge < len(rms)-1:
+        for i in range(tmpEnd-rangeJudge,dataEnd-1):
+          if rms[i] < baseCut:
             dataEnd = i
             tmpEnd = dataEnd
-            break#(for文から出る)
+            break
     else:
-      for i in range(tmpEnd-rangeJudge,len(rms[0])-1):#(eは見なくて良い)
-        if rms[0][i] < baseCut:
+      for i in range(tmpEnd-rangeJudge,len(rms)-1):
+        if rms[i] < baseCut:
           dataEnd = i
           tmpStart = dataEnd
-          break#(for文から出る)
+          break
 
     dataEnd -= 1
     tmpEnd = dataEnd-rangeJudge
