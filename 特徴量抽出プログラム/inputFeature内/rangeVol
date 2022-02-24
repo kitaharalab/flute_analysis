@@ -1,2 +1,3 @@
 def rangeVol(data):
-  return max(data)/min(data)
+  rms = librosa.feature.rms(y = data,hop_length = 512)
+  return max(rms[0])/min(rms[0])
