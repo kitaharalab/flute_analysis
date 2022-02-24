@@ -1,9 +1,7 @@
-def createFundData(data):
+def createFundData(data,sr):
   base=440.0                                                              
   fixData = data.astype(np.float)
  
-  _f0, _time = pw.dio(fixData, fs,f0_floor=70,f0_ceil=16000,frame_period=10.625) 
-  f0 = pw.stonemask(fixData, _f0, _time, fs)#基本周波数の修正 
+  _f0, _time = pw.dio(fixData, sr,f0_floor=70,f0_ceil=16000,frame_period=10.625) 
+  f0 = pw.stonemask(fixData, _f0, _time, sr)#基本周波数の修正 
   fundData = 1200 * np.log2(f0/base) + 5700
-
-  return fundData
