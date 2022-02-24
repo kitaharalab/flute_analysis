@@ -1,0 +1,53 @@
+def overtoneFeature(data,sr,isStart):
+  y = data[0]
+  dataStart = data[1]
+  dataEnd = data[2]
+  rangeAjust = data[3]
+  
+  if isStart == 0:
+    y1 = y[0*sr : 1*sr]
+  else:
+    time = (dataEnd-dataStart-2*rangeAjust)/sr
+    center = int(time/2)
+    y1 = y[center*sr : (center+1)*sr]
+
+  if np.all(y1 == 0):
+    cntOvertone = 0
+    ratioOvertone = 0
+    ratioNoise = 0
+  else:
+    Y1 = fft.fft(y1)
+    Y1_half = Y1[0 : int(len(Y1)/2)]
+    spec = np.log(np.abs(Y1_half)+1)
+
+    baseFreq = int(220+220*(2**(3/12)))
+    margin = int(baseFreq/5)
+    overtone = []
+    rangeSearchCurrent = spec[baseFreq-margin:baseFreq+margin]
+    overtone.append(max(rangeSearchCurrent))
+    baseFreq = baseFreq-margin+np.argmax(rangeSearchCurrent)
+    currentOvertone = overtone[0]
+    k = 2
+    while currentOvertone > max(spec)/100:
+      margin = int(baseFreq/5)
+      rangeSearchCurrent = spec[(k*baseFreq)-margin:(k*baseFreq)+margin]
+      if len(rangeSearchCurrent)==0: currentOvertone = 0
+      else: currentOvertone = max(rangeSearchCurrent)
+      l = k+1
+      center = spec[int(((k*baseFreq-margin)+(l*baseFreq+margin))/2)-margin:int(((k*baseFreq-margin)+(l*baseFreq+margin))/2)+margin]
+      rangeSearchNext = spec[l*baseFreq-margin:l*baseFreq+margin]
+      nextOvertone = max(rangeSearchNext)
+      if max(center) > (currentOvertone+nextOvertone)/4: break
+      if currentOvertone >= max(spec)/100:
+        overtone.append(currentOvertone)
+        k += 1
+
+    sumOvertone = 0
+    for i in range(len(overtone)): sumOvertone += overtone[i]
+
+    rangeAll = spec[0:k*baseFreq+margin]
+    ratioOvertone = sum(overtone[1:len(overtone)])/overtone[0]
+    ratioNoise = sumOvertone/sum(rangeAll)
+    cntOvertone = len(overtone)
+
+    return [cntOvertone,ratioOvertone,ratioNoise]
