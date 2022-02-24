@@ -52,6 +52,7 @@ def searchEnd(rms,rangeJudge,baseCut):
   return dataEnd
 
 def createData(file,y):
+  #fs, y = wavfile.read(file)
   rms = librosa.feature.rms(y=y,hop_length = 512)
   baseCut = max(rms[0])/10
   rangeJudge = int(len(rms[0])/19)
@@ -121,6 +122,7 @@ def divAvgFund(data):
   return divsum/cnt
 
 def overtoneFeature(data,sr,isStart):
+  #cntOvertone(data),ratioOvertone(data),ratioNoise(data)
   y = data[0]
   dataStart = data[1]
   dataEnd = data[2]
@@ -176,6 +178,7 @@ def overtoneFeature(data,sr,isStart):
 
 def inputFeature(array,data,sr):
 
+  #rms = librosa.feature.rms(y = data[0],hop_length = 512)
   array[0].append(rangeVol(data[0]))
   array[1].append(divAvgVol(data[0]))
 
@@ -195,7 +198,6 @@ files = glob.glob(path+"*.wav")
 arrayFeature = [[] for i in range(10)]
 
 for file in files:
-  print(file)
   y,sr = librosa.load(file,sr=None)
   cutData = createData(file,y)
 
