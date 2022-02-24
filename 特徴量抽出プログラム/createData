@@ -1,10 +1,12 @@
 def createData(file,y):
   #fs, y = wavfile.read(file)
-  rms = librosa.feature.rms(y=y,hop_length = 512)#hop_length512に変更
+  rms = librosa.feature.rms(y=y,hop_length = 512)
   baseCut = max(rms[0])/10
   rangeJudge = int(len(rms[0])/19)
-  dataStart = searchStart(file,rangeJudge,baseCut)
-  dataEnd = searchEnd(file,rangeJudge,baseCut)
+  dataStart = searchStart(rms,rangeJudge,baseCut)
+  dataEnd = searchEnd(rms,rangeJudge,baseCut)
+  dataStart = dataStart*int(len(y)/len(rms[0]))
+  dataEnd = dataEnd*int(len(y)/len(rms[0]))
   rangeAdjust = int((dataEnd-dataStart)/50)
 
   return [y[dataStart+int(rangeAdjust):dataEnd+int(rangeAdjust)],dataStart,dataEnd,rangeAdjust]
