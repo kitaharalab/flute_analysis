@@ -15,10 +15,10 @@ def searchStart(rms,rangeJudge,baseCut):
   dataStart = 0
   tmpStart = dataStart+rangeJudge
  
-  while rms[0][dataStart] < baseCut or rms[0][tmpStart] < baseCut:
-    if rms[0][tmpStart] >= baseCut:
+  while rms[dataStart] < baseCut or rms[tmpStart] < baseCut:
+    if rms[tmpStart] >= baseCut:
       for i in range(dataStart+1,tmpStart+rangeJudge):
-        if rms[0][i] < baseCut:
+        if rms[i] < baseCut:
           dataStart = i
           tmpStart = dataStart
           break
@@ -28,14 +28,14 @@ def searchStart(rms,rangeJudge,baseCut):
   return dataStart
 
 def searchEnd(rms,rangeJudge,baseCut):
-  dataEnd = len(rms[0])-1
+  dataEnd = len(rms)-1
   tmpEnd = dataEnd-rangeJudge
  
-  while rms[0][dataEnd] < baseCut or rms[0][tmpEnd] < baseCut:
-    if rms[0][tmpEnd] >= baseCut:
-      if tmpEnd+rangeJudge < len(rms[0])-1:
+  while rms[dataEnd] < baseCut or rms[tmpEnd] < baseCut:
+    if rms[tmpEnd] >= baseCut:
+      if tmpEnd+rangeJudge < len(rms)-1:
         for i in range(tmpEnd-rangeJudge,dataEnd-1):
-          if rms[0][i] < baseCut:
+          if rms[i] < baseCut:
             dataEnd = i
             tmpEnd = dataEnd
             break
@@ -52,12 +52,11 @@ def searchEnd(rms,rangeJudge,baseCut):
   return dataEnd
 
 def createData(file,y):
-  #fs, y = wavfile.read(file)
   rms = librosa.feature.rms(y=y,hop_length = 512)
   baseCut = max(rms[0])/10
   rangeJudge = int(len(rms[0])/19)
-  dataStart = searchStart(rms,rangeJudge,baseCut)
-  dataEnd = searchEnd(rms,rangeJudge,baseCut)
+  dataStart = searchStart(rms[0],rangeJudge,baseCut)
+  dataEnd = searchEnd(rms[0],rangeJudge,baseCut)
   dataStart = dataStart*int(len(y)/len(rms[0]))
   dataEnd = dataEnd*int(len(y)/len(rms[0]))
   rangeAdjust = int((dataEnd-dataStart)/50)
@@ -84,7 +83,6 @@ def createFundData(data,sr):
   base=440.0                                                              
   fixData = data.astype(np.float)
  
-  #_f0, _time = pw.dio(fixData, fs,f0_floor=70,f0_ceil=16000,frame_period=10.625)
   _f0, _time = pw.dio(fixData, sr,f0_floor=70,f0_ceil=16000,frame_period=10.625) 
   f0 = pw.stonemask(fixData, _f0, _time, sr)
   fundData = 1200 * np.log2(f0/base) + 5700
@@ -122,7 +120,6 @@ def divAvgFund(data):
   return divsum/cnt
 
 def overtoneFeature(data,sr,isStart):
-  #cntOvertone(data),ratioOvertone(data),ratioNoise(data)
   y = data[0]
   dataStart = data[1]
   dataEnd = data[2]
@@ -178,7 +175,6 @@ def overtoneFeature(data,sr,isStart):
 
 def inputFeature(array,data,sr):
 
-  #rms = librosa.feature.rms(y = data[0],hop_length = 512)
   array[0].append(rangeVol(data[0]))
   array[1].append(divAvgVol(data[0]))
 
